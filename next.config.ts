@@ -114,10 +114,13 @@ const nextConfig: NextConfig = {
   // Image optimization configuration
   images: {
     remotePatterns: [
+
+
+
       {
-        protocol: 'http',
-        hostname: 'https://fasateen.duckdns.org',
-        pathname: '/media/**',
+        protocol: 'https',
+        hostname: 'fasateen.duckdns.org',
+        pathname: '/furateen-media/**',
       },
 
       {
