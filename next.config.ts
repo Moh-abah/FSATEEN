@@ -119,10 +119,21 @@ const nextConfig: NextConfig = {
         hostname: 'https://fasateen.duckdns.org',
         pathname: '/media/**',
       },
+
+      {
+        protocol: 'https',
+        hostname: 'fasateen.duckdns.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+      },
       // ... باقي الـ patterns
     ],
     unoptimized: process.env.NODE_ENV === 'development',
   },
+
+  
 
   // ✅ إضافة rewrites لحل مشكلة CORS
   async rewrites() {
