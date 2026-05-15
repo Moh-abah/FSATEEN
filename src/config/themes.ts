@@ -6326,7 +6326,7 @@ export const AVAILABLE_THEMES = {
 
 export type ThemeId = keyof typeof AVAILABLE_THEMES;
 
-export const DEFAULT_THEME_ID: ThemeId = 'stardust_mirage';
+export const DEFAULT_THEME_ID: ThemeId = 'rose';
 
 
 
