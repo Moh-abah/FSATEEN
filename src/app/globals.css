@@ -1,0 +1,2151 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   ✨ FUSATINI THEME - ROSE PALETTE
+   جميع الألوان بصيغة OKLCH لتوافق تام مع Tailwind v4
+   ======================================== */
+
+@theme inline {
+  /* 🔴 Primary Rose - Fashion Brand Color */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+
+  /* 🎨 Primary Scale (50-900) */
+  --color-primary-50: var(--primary-50, oklch(0.973 0.014 14.548));
+  --color-primary-100: var(--primary-100, oklch(0.928 0.042 14.548));
+  --color-primary-200: var(--primary-200, oklch(0.865 0.078 14.548));
+  --color-primary-300: var(--primary-300, oklch(0.782 0.124 14.548));
+  --color-primary-400: var(--primary-400, oklch(0.707 0.185 14.548));
+  --color-primary-500: var(--primary-500, oklch(0.637 0.237 14.548));
+  --color-primary-600: var(--primary-600, oklch(0.577 0.245 14.548));
+  --color-primary-700: var(--primary-700, oklch(0.514 0.223 14.548));
+  --color-primary-800: var(--primary-800, oklch(0.473 0.191 14.548));
+  --color-primary-900: var(--primary-900, oklch(0.391 0.152 14.548));
+
+  /* 🧡 Warm Accents */
+  --color-warm-50: var(--warm-50, oklch(0.985 0.008 73.684));
+  --color-warm-100: var(--warm-100, oklch(0.962 0.022 73.684));
+  --color-warm-200: var(--warm-200, oklch(0.924 0.048 73.684));
+  --color-warm-300: var(--warm-300, oklch(0.875 0.089 73.684));
+  --color-warm-400: var(--warm-400, oklch(0.816 0.134 73.684));
+  --color-warm-500: var(--warm-500, oklch(0.742 0.183 73.684));
+
+  /* 🖼️ Base Surfaces */
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated, var(--surface));
+
+  /* 📐 Borders */
+  --color-border: var(--border);
+  --color-border-light: var(--border-light, var(--border));
+
+  /* ✍️ Text Hierarchy */
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-inverse: var(--text-inverse);
+
+  /* ✅ Status Colors */
+  --color-success: var(--success);
+  --color-success-light: var(--success-light, var(--success));
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light, var(--warning));
+  --color-error: var(--error);
+  --color-error-light: var(--error-light, var(--error));
+  --color-info: var(--info);
+  --color-info-light: var(--info-light, var(--info));
+
+  /* 📱 Navigation */
+  --color-tab-bar: var(--tab-bar, var(--surface));
+  --color-tab-bar-border: var(--tab-bar-border, var(--border));
+  --color-tab-active: var(--tab-active, var(--primary));
+  --color-tab-inactive: var(--tab-inactive, var(--text-tertiary));
+
+  /* 💬 Chat */
+  --color-chat-bubble-sent: var(--chat-bubble-sent, var(--primary));
+  --color-chat-bubble-received: var(--chat-bubble-received,
+      var(--surface-muted));
+  --color-chat-bubble-text-sent: var(--chat-bubble-text-sent,
+      var(--text-inverse));
+  --color-chat-bubble-text-received: var(--chat-bubble-text-received,
+      var(--text));
+
+  /* 🎭 Overlays */
+  --color-overlay: var(--overlay, oklch(0 0 0 / 0.5));
+  --color-overlay-light: var(--overlay-light, oklch(0 0 0 / 0.1));
+
+  /* 🃏 Cards & Inputs */
+  --color-card-background: var(--card-background, var(--surface));
+  --color-card-border: var(--card-border, var(--border));
+  --color-card-shadow: var(--card-shadow, oklch(0 0 0 / 0.08));
+  --color-input-background: var(--input-background, var(--surface));
+  --color-input-border: var(--input-border, var(--border));
+  --color-input-focus-border: var(--input-focus-border, var(--primary));
+  --color-input-text: var(--input-text, var(--text));
+  --color-input-placeholder: var(--input-placeholder, var(--text-tertiary));
+  --color-header-background: var(--header-background, var(--surface));
+  --color-header-border: var(--header-border, var(--border));
+
+  /* 🔘 Switch */
+  --color-switch-active: var(--switch-active, var(--primary));
+  --color-switch-inactive: var(--switch-inactive, var(--border));
+  --color-switch-thumb: var(--switch-thumb, var(--text-inverse));
+  --color-switch-track: var(--switch-track, var(--border));
+
+  /* ✨ shadcn/ui Variables - REQUIRED */
+  --color-background: var(--background);
+  --color-foreground: var(--text);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--text);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--surface-muted);
+  --color-secondary-foreground: var(--text);
+  --color-muted: var(--surface-muted);
+  --color-muted-foreground: var(--text-secondary);
+  --color-accent: var(--primary-light);
+  --color-accent-foreground: var(--text);
+  --color-destructive: var(--error);
+  --color-destructive-foreground: var(--text-inverse);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+  --radius: var(--radius, 0.625rem);
+
+  /* Chart Colors */
+  --color-chart-1: var(--chart-1, var(--primary));
+  --color-chart-2: var(--chart-2, var(--warm-500));
+  --color-chart-3: var(--chart-3, var(--info));
+  --color-chart-4: var(--chart-4, var(--success));
+  --color-chart-5: var(--chart-5, var(--text-tertiary));
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar, var(--surface));
+  --color-sidebar-foreground: var(--sidebar-foreground, var(--text));
+  --color-sidebar-primary: var(--sidebar-primary, var(--primary));
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground,
+      var(--primary-foreground));
+  --color-sidebar-accent: var(--sidebar-accent, var(--primary-light));
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground,
+      var(--text));
+  --color-sidebar-border: var(--sidebar-border, var(--border));
+  --color-sidebar-ring: var(--sidebar-ring, var(--primary));
+
+  /* ✨ Fonts */
+  --font-cairo: "Cairo", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-cairo), var(--font-geist-sans, system-ui, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, monospace);
+
+  /* ✨ Animations */
+  --animate-fade-in-up: fadeInUp 0.4s ease-out forwards;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ========================================
+   🌙 CSS VARIABLES - LIGHT MODE (Default)
+   ======================================== */
+
+:root {
+  --radius: 0.625rem;
+
+  /* 🔴 Primary Rose */
+  --primary: oklch(0.637 0.237 14.548);
+  --primary-foreground: oklch(1 0 0);
+  --primary-light: oklch(0.928 0.042 14.548);
+  --primary-dark: oklch(0.473 0.191 14.548);
+  --primary-50: oklch(0.973 0.014 14.548);
+  --primary-100: oklch(0.928 0.042 14.548);
+  --primary-200: oklch(0.865 0.078 14.548);
+  --primary-300: oklch(0.782 0.124 14.548);
+  --primary-400: oklch(0.707 0.185 14.548);
+  --primary-500: oklch(0.637 0.237 14.548);
+  --primary-600: oklch(0.577 0.245 14.548);
+  --primary-700: oklch(0.514 0.223 14.548);
+  --primary-800: oklch(0.473 0.191 14.548);
+  --primary-900: oklch(0.391 0.152 14.548);
+
+  /* 🧡 Warm Accents */
+  --warm-50: oklch(0.985 0.008 73.684);
+  --warm-100: oklch(0.962 0.022 73.684);
+  --warm-200: oklch(0.924 0.048 73.684);
+  --warm-300: oklch(0.875 0.089 73.684);
+  --warm-400: oklch(0.816 0.134 73.684);
+  --warm-500: oklch(0.742 0.183 73.684);
+
+  /* 🖼️ Surfaces */
+  --background: oklch(1 0 0);
+  --surface: oklch(0.985 0.002 247.839);
+  --surface-muted: oklch(0.968 0.007 247.839);
+  --surface-elevated: oklch(1 0 0);
+
+  /* 📐 Borders */
+  --border: oklch(0.929 0.013 255.508);
+  --border-light: oklch(0.968 0.007 247.839);
+
+  /* ✍️ Text */
+  --text: oklch(0.21 0.034 264.665);
+  --text-secondary: oklch(0.554 0.046 257.417);
+  --text-tertiary: oklch(0.704 0.04 256.788);
+  --text-inverse: oklch(1 0 0);
+
+  /* ✅ Status */
+  --success: oklch(0.723 0.145 149.45);
+  --success-light: oklch(0.925 0.038 149.45);
+  --warning: oklch(0.769 0.188 70.08);
+  --warning-light: oklch(0.945 0.032 70.08);
+  --error: oklch(0.637 0.237 25.331);
+  --error-light: oklch(0.928 0.042 25.331);
+  --info: oklch(0.623 0.214 259.815);
+  --info-light: oklch(0.913 0.028 259.815);
+
+  /* 📱 Navigation */
+  --tab-bar: oklch(1 0 0);
+  --tab-bar-border: oklch(0.929 0.013 255.508);
+  --tab-active: oklch(0.637 0.237 14.548);
+  --tab-inactive: oklch(0.704 0.04 256.788);
+
+  /* 💬 Chat */
+  --chat-bubble-sent: oklch(0.637 0.237 14.548);
+  --chat-bubble-received: oklch(0.968 0.007 247.839);
+  --chat-bubble-text-sent: oklch(1 0 0);
+  --chat-bubble-text-received: oklch(0.21 0.034 264.665);
+
+  /* 🎭 Overlays */
+  --overlay: oklch(0 0 0 / 0.5);
+  --overlay-light: oklch(0 0 0 / 0.1);
+
+  /* 🃏 Cards & Inputs */
+  --card-background: oklch(1 0 0);
+  --card-border: oklch(0.968 0.007 247.839);
+  --card-shadow: oklch(0 0 0 / 0.08);
+  --input-background: oklch(0.985 0.002 247.839);
+  --input-border: oklch(0.929 0.013 255.508);
+  --input-focus-border: oklch(0.637 0.237 14.548);
+  --input-text: oklch(0.21 0.034 264.665);
+  --input-placeholder: oklch(0.704 0.04 256.788);
+  --header-background: oklch(1 0 0);
+  --header-border: oklch(0.968 0.007 247.839);
+
+  /* 🔘 Switch */
+  --switch-active: oklch(0.637 0.237 14.548);
+  --switch-inactive: oklch(0.865 0.008 257.417);
+  --switch-thumb: oklch(1 0 0);
+  --switch-track: oklch(0.929 0.013 255.508);
+
+  /* 📊 Charts */
+  --chart-1: oklch(0.637 0.237 14.548);
+  --chart-2: oklch(0.742 0.183 73.684);
+  --chart-3: oklch(0.623 0.214 259.815);
+  --chart-4: oklch(0.723 0.145 149.45);
+  --chart-5: oklch(0.704 0.04 256.788);
+
+  /* 🧭 Sidebar */
+  --sidebar: oklch(0.985 0.002 247.839);
+  --sidebar-foreground: oklch(0.21 0.034 264.665);
+  --sidebar-primary: oklch(0.637 0.237 14.548);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.928 0.042 14.548);
+  --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.637 0.237 14.548);
+}
+
+/* ========================================
+   🌙 CSS VARIABLES - DARK MODE
+   ======================================== */
+
+.dark {
+  /* 🔴 Primary Rose - Dark Mode (LIGHTER for contrast) */
+  --primary: oklch(0.707 0.185 14.548);
+  --primary-foreground: oklch(0.21 0.034 264.665);
+  --primary-light: oklch(0.865 0.078 14.548);
+  --primary-dark: oklch(0.514 0.223 14.548);
+  --primary-50: oklch(0.21 0.034 14.548);
+  --primary-100: oklch(0.28 0.058 14.548);
+  --primary-200: oklch(0.391 0.152 14.548);
+  --primary-300: oklch(0.473 0.191 14.548);
+  --primary-400: oklch(0.577 0.245 14.548);
+  --primary-500: oklch(0.637 0.237 14.548);
+  --primary-600: oklch(0.707 0.185 14.548);
+  --primary-700: oklch(0.782 0.124 14.548);
+  --primary-800: oklch(0.865 0.078 14.548);
+  --primary-900: oklch(0.928 0.042 14.548);
+
+  /* 🧡 Warm - Dark */
+  --warm-50: oklch(0.21 0.034 73.684);
+  --warm-100: oklch(0.28 0.058 73.684);
+  --warm-200: oklch(0.391 0.089 73.684);
+  --warm-300: oklch(0.514 0.134 73.684);
+  --warm-400: oklch(0.642 0.183 73.684);
+  --warm-500: oklch(0.742 0.183 73.684);
+
+  /* 🖼️ Surfaces - Dark */
+  --background: oklch(0.21 0.034 264.665);
+  --surface: oklch(0.279 0.041 260.031);
+  --surface-muted: oklch(0.391 0.046 257.417);
+  --surface-elevated: oklch(0.279 0.041 260.031);
+
+  /* 📐 Borders - Dark */
+  --border: oklch(0.391 0.046 257.417);
+  --border-light: oklch(0.314 0.041 260.031);
+
+  /* ✍️ Text - Dark (LIGHTER for contrast) */
+  --text: oklch(0.968 0.007 247.839);
+  --text-secondary: oklch(0.704 0.04 256.788);
+  --text-tertiary: oklch(0.554 0.046 257.417);
+  --text-inverse: oklch(0.21 0.034 264.665);
+
+  /* ✅ Status - Dark */
+  --success: oklch(0.793 0.124 149.45);
+  --success-light: oklch(0.21 0.034 149.45);
+  --warning: oklch(0.828 0.188 70.08);
+  --warning-light: oklch(0.21 0.034 70.08);
+  --error: oklch(0.739 0.214 25.331);
+  --error-light: oklch(0.21 0.034 25.331);
+  --info: oklch(0.707 0.185 259.815);
+  --info-light: oklch(0.21 0.034 259.815);
+
+  /* 📱 Navigation - Dark */
+  --tab-bar: oklch(0.279 0.041 260.031);
+  --tab-bar-border: oklch(0.391 0.046 257.417);
+  --tab-active: oklch(0.707 0.185 14.548);
+  --tab-inactive: oklch(0.554 0.046 257.417);
+
+  /* 💬 Chat - Dark */
+  --chat-bubble-sent: oklch(0.707 0.185 14.548);
+  --chat-bubble-received: oklch(0.391 0.046 257.417);
+  --chat-bubble-text-sent: oklch(0.21 0.034 264.665);
+  --chat-bubble-text-received: oklch(0.968 0.007 247.839);
+
+  /* 🎭 Overlays - Dark */
+  --overlay: oklch(0 0 0 / 0.7);
+  --overlay-light: oklch(0 0 0 / 0.3);
+
+  /* 🃏 Cards & Inputs - Dark */
+  --card-background: oklch(0.279 0.041 260.031);
+  --card-border: oklch(0.391 0.046 257.417);
+  --card-shadow: oklch(0 0 0 / 0.4);
+  --input-background: oklch(0.314 0.041 260.031);
+  --input-border: oklch(0.391 0.046 257.417);
+  --input-focus-border: oklch(0.707 0.185 14.548);
+  --input-text: oklch(0.968 0.007 247.839);
+  --input-placeholder: oklch(0.554 0.046 257.417);
+  --header-background: oklch(0.21 0.034 264.665);
+  --header-border: oklch(0.279 0.041 260.031);
+
+  /* 🔘 Switch - Dark */
+  --switch-active: oklch(0.707 0.185 14.548);
+  --switch-inactive: oklch(0.391 0.046 257.417);
+  --switch-thumb: oklch(0.968 0.007 247.839);
+  --switch-track: oklch(0.314 0.041 260.031);
+
+  /* 📊 Charts - Dark */
+  --chart-1: oklch(0.707 0.185 14.548);
+  --chart-2: oklch(0.742 0.183 73.684);
+  --chart-3: oklch(0.707 0.185 259.815);
+  --chart-4: oklch(0.793 0.124 149.45);
+  --chart-5: oklch(0.554 0.046 257.417);
+
+  /* 🧭 Sidebar - Dark */
+  --sidebar: oklch(0.279 0.041 260.031);
+  --sidebar-foreground: oklch(0.968 0.007 247.839);
+  --sidebar-primary: oklch(0.707 0.185 14.548);
+  --sidebar-primary-foreground: oklch(0.21 0.034 264.665);
+  --sidebar-accent: oklch(0.391 0.152 14.548);
+  --sidebar-accent-foreground: oklch(0.968 0.007 247.839);
+  --sidebar-border: oklch(0.391 0.046 257.417);
+  --sidebar-ring: oklch(0.707 0.185 14.548);
+}
+
+/* ========================================
+   🎨 GLOBAL BASE STYLES
+   ======================================== */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-cairo;
+  }
+}
+
+/* ========================================
+   ✨ CUSTOM ANIMATIONS & UTILITIES
+   ======================================== */
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* Staggered delays for list items (use with animate-fadeInUp) */
+.animate-fadeInUp:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.animate-fadeInUp:nth-child(2) {
+  animation-delay: 50ms;
+}
+
+.animate-fadeInUp:nth-child(3) {
+  animation-delay: 100ms;
+}
+
+.animate-fadeInUp:nth-child(4) {
+  animation-delay: 150ms;
+}
+
+.animate-fadeInUp:nth-child(5) {
+  animation-delay: 200ms;
+}
+
+.animate-fadeInUp:nth-child(6) {
+  animation-delay: 250ms;
+}
+
+.animate-fadeInUp:nth-child(7) {
+  animation-delay: 300ms;
+}
+
+.animate-fadeInUp:nth-child(8) {
+  animation-delay: 350ms;
+}
+
+.animate-fadeInUp:nth-child(9) {
+  animation-delay: 400ms;
+}
+
+.animate-fadeInUp:nth-child(10) {
+  animation-delay: 450ms;
+}
+
+/* ========================================
+   🎨 CUSTOM SCROLLBAR STYLES
+   ======================================== */
+
+/* Premium thin scrollbar for scrollable areas */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Hide scrollbar but keep functionality (for horizontal tabs, etc.) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Global scrollbar hide for html (as requested) */
+html {
+  overflow: -moz-scrollbars-none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* ========================================
+   💎 EXTRA UTILITIES FOR FUSATINI
+   ======================================== */
+
+/* Prevent horizontal scroll on body */
+body {
+  overflow-x: hidden;
+}
+
+/* Text selection color matching brand */
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Focus visible ring for accessibility */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Smooth tap highlight removal for mobile */
+button,
+a,
+[role="button"],
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Gradient utilities using CSS variables */
+.bg-gradient-primary {
+  background: linear-gradient(135deg,
+      var(--primary-400, var(--primary)),
+      var(--primary-600, var(--primary-dark)));
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg,
+      var(--warm-300, var(--warm-400)),
+      var(--warm-500));
+}
+
+.bg-gradient-rose {
+  background: linear-gradient(135deg,
+      var(--primary-200, var(--primary-light)),
+      var(--primary-800, var(--primary-dark)));
+}
+
+/* Premium card shadow utility */
+.shadow-premium {
+  box-shadow: 0 4px 20px var(--card-shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.shadow-premium:hover {
+  box-shadow: 0 8px 30px var(--card-shadow);
+}
+
+/* Smooth transition utility for interactive elements */
+.transition-premium {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ✨ تأكد من وجود هذه الأنيميشن في ملف globals.css */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ إضافة لمسات ناعمة في globals.css */
+
+/* نبض خفيف للثيم المختار */
+@keyframes softPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--primary) / 40;
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px var(--primary) / 0;
+  }
+}
+
+.ring-\[var\(--primary\)\] {
+  animation: softPulse 2s infinite;
+}
+
+/* تكبير ناعم للون عند التحويم */
+.color-swatch {
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+  filter: brightness(1.1);
+}
+
+/* تدرج متحرك للخلفية (للعروض الخاصة) */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-animated-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Scrollbar Utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+
+  /* ✨ Fade In Up Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 0.4s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* ✨ Scrollbar Utilities */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ✨ Focus & Selection */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+
+
+@keyframes gradient-slow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-slow {
+  background-size: 200% 200%;
+  animation: gradient-slow 12s ease infinite;
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+}
+
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 1.5s ease-in-out infinite;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+
+
+
+
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.2s ease-out;
+}
+
+
+
+
+
+
+
+
+
+
+/* ✨ Premium Animations for Home Page */
+
+/* Gradient Animation */
+@keyframes gradient-slow {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-slow {
+  background-size: 200% 200%;
+  animation: gradient-slow 15s ease infinite;
+}
+
+/* Floating Animation */
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+/* Sparkle Animation */
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Scroll Indicator Animation */
+@keyframes scroll-indicator {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-indicator {
+  animation: scroll-indicator 1.5s ease-in-out infinite;
+}
+
+/* Fade In Up - Enhanced */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* Staggered delays */
+.animate-fadeInUp:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.animate-fadeInUp:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.animate-fadeInUp:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.animate-fadeInUp:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+.animate-fadeInUp:nth-child(5) {
+  animation-delay: 320ms;
+}
+
+.animate-fadeInUp:nth-child(6) {
+  animation-delay: 400ms;
+}
+
+/* Bounce Slow */
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+/* Text Gradient */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section Spacing */
+section {
+  scroll-margin-top: 80px;
+}
+
+
+
+
+
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Float Animation for Particles */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ Smooth transitions */
+input,
+textarea,
+select,
+button {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+/* ✨ Cursor wait for uploading */
+.cursor-wait {
+  cursor: wait;
+}
+
+
+
+
+
+
+
+/* ✨ Float Animation for Particles */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ✨ Float Slow for Orb */
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+/* ✨ Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+
+
+
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ Smooth transitions for form elements */
+input,
+button {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+
+
+
+/* ✨ Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Float Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-15px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* ✨ Pulse Slow */
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-pulse-slow.delay-1000 {
+  animation-delay: 1s;
+}
+
+/* ✨ Bounce Slow */
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s ease-in-out infinite;
+}
+
+/* ✨ Rotate Slow */
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 8s linear infinite;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-15px) scale(1.1);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Float Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-15px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* ✨ Pulse Glow */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--primary);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 20px var(--primary)/0;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* ✨ Sparkle Animation */
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* ✨ Bounce In */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+/* ✨ Checkmark Draw */
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-checkmark {
+  animation: checkmark 0.5s ease-out forwards;
+}
+
+/* ✨ Spin Slow */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ Smooth transitions */
+input,
+button {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+
+
+
+
+
+
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Float Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-15px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ✨ Float Heart Animation */
+@keyframes float-heart {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(-25px) scale(1.2) rotate(15deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-float-heart {
+  animation: float-heart 3s ease-in-out infinite;
+}
+
+/* ✨ Pulse Glow */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--primary);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 20px var(--primary)/0;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* ✨ Unlock Animation */
+@keyframes unlock {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-15deg);
+  }
+}
+
+.animate-unlock {
+  animation: unlock 1.5s ease-in-out infinite;
+}
+
+/* ✨ Key Turn Animation */
+@keyframes key-turn {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(25deg) scale(1.1);
+  }
+}
+
+.animate-key-turn {
+  animation: key-turn 2s ease-in-out infinite;
+}
+
+/* ✨ Shake Animation for Error */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* ✨ Bounce In */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+/* ✨ Spin Slow */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ Smooth transitions */
+input,
+button {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+
+
+
+
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Float Heart Animation */
+@keyframes float-heart {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateY(-30px) scale(1.3) rotate(20deg);
+    opacity: 0.7;
+  }
+}
+
+.animate-float-heart {
+  animation: float-heart 4s ease-in-out infinite;
+}
+
+/* ✨ Sparkle Animation */
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(180deg);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* ✨ Pulse Glow */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--primary);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 25px var(--primary)/0;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 5s ease-in-out infinite;
+}
+
+/* ✨ Bounce In */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s ease-out forwards;
+}
+
+/* ✨ Float Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-float.delay-700 {
+  animation-delay: 0.7s;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ Smooth transitions */
+input,
+button {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+
+/* ✨ Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* ✨ Float Key Animation */
+@keyframes float-key {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateY(-25px) rotate(15deg) scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+.animate-float-key {
+  animation: float-key 4s ease-in-out infinite;
+}
+
+/* ✨ Float Heart Animation */
+@keyframes float-heart {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.animate-float-heart {
+  animation: float-heart 3.5s ease-in-out infinite;
+}
+
+/* ✨ Pulse Glow */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--primary);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 25px var(--primary)/0;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 5s ease-in-out infinite;
+}
+
+/* ✨ Unlock Animation */
+@keyframes unlock {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-12deg);
+  }
+}
+
+.animate-unlock {
+  animation: unlock 1.5s ease-in-out infinite;
+}
+
+/* ✨ Key Turn Animation */
+@keyframes key-turn {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(20deg) scale(1.1);
+  }
+}
+
+.animate-key-turn {
+  animation: key-turn 2s ease-in-out infinite;
+}
+
+/* ✨ Checkmark Draw */
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-checkmark {
+  animation: checkmark 0.5s ease-out forwards;
+}
+
+/* ✨ Bounce In */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s ease-out forwards;
+}
+
+/* ✨ Float Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* ✨ Sparkle Animation */
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(180deg);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* ✨ Spin Slow */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ✨ Focus & Selection */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ✨ Smooth transitions */
+input,
+button {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
