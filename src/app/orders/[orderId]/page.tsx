@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Navbar, Footer, MobileBottomNav } from "@/components/layout";
+import type { Order } from "@/types";
 import {
   StatusBadge,
   LoadingSkeleton,
@@ -49,7 +50,8 @@ export default function OrderDetailPage() {
   const orderId = params.orderId as string;
 
   const { user } = useAuthStore();
-  const { data: order, isLoading, error, refetch } = useOrder(orderId);
+  const { data: order, isLoading, error, refetch } = useOrder(orderId) as { data: Order | undefined; isLoading: boolean; error: Error | null; refetch: () => void };
+  
   const actions = useOrderActions();
 
   const [showDisputeDialog, setShowDisputeDialog] = useState(false);
@@ -164,8 +166,8 @@ export default function OrderDetailPage() {
                   <div className="relative aspect-[3/4] rounded-3xl overflow-hidden bg-[var(--surfaceMuted)] group">
                     <img
                       src={
-                        order.product?.images?.[0]?.url ||
-                        "/placeholder-dress.png"
+                        order.product_image 
+                   
                       }
                       alt={order.product?.title || "منتج"}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -187,12 +189,12 @@ export default function OrderDetailPage() {
                       <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-xl">
                         <div className="flex items-baseline justify-between">
                           <span className="text-2xl font-bold text-[var(--primary)] font-cairo">
-                            {formatCurrency(order.total_price)}
+                            {formatCurrency(order.product_price)}
                           </span>
-                          {order.total_price &&
-                            order.total_price > order.total_price && (
+                          {order.product_price &&
+                            order.product_price > order.product_price && (
                               <span className="text-sm text-[var(--textTertiary)] line-through">
-                              {formatCurrency(order.total_price)}
+                              {formatCurrency(order.product_price)}
                               </span>
                             )}
                         </div>
@@ -200,23 +202,6 @@ export default function OrderDetailPage() {
                     </div>
                   </div>
 
-                  {/* Image Thumbnails */}
-                  {order.product?.images?.length > 1 && (
-                    <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
-                      {order.product.images.slice(0, 4).map((img, idx) => (
-                        <button
-                          key={idx}
-                          className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 ring-2 ring-transparent hover:ring-[var(--primary)] transition-all"
-                        >
-                          <img
-                            src={img.url}
-                            alt=""
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </CardContent>
               </Card>
             </div>
@@ -242,7 +227,7 @@ export default function OrderDetailPage() {
                     href={`/products/${order.product_id}`}
                     className="font-semibold text-lg text-[var(--text)] hover:text-[var(--primary)] transition-colors font-cairo line-clamp-2"
                   >
-                    {order.product?.title}
+                    {order.product_title}
                   </Link>
 
                 </CardContent>
@@ -361,14 +346,14 @@ export default function OrderDetailPage() {
                               ? order.seller?.avatar_url
                               : order.buyer?.avatar_url,
                             isBuyer
-                              ? order.seller?.full_name
-                              : order.buyer?.full_name,
+                              ? order.seller_username
+                              : order.buyer_username
                           )}
                         />
                         <AvatarFallback className="bg-[var(--primary)] text-[var(--textInverse)] font-cairo">
                           {(isBuyer
-                            ? order.seller?.full_name
-                            : order.buyer?.full_name
+                            ? order.seller_username
+                            : order.buyer_username
                           )?.charAt(0) || "م"}
                         </AvatarFallback>
                       </Avatar>

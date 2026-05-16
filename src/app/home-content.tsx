@@ -380,30 +380,6 @@ import { LoadingSkeleton, EmptyState } from "@/components/shared";
 import { useProducts, useAuctions, useCategories } from "@/hooks";
 import { Auction } from "@/types";
 
-// ✨ Trust badges data - Enhanced
-const TRUST_BADGES = [
-  {
-    icon: Shield,
-    title: "دفع آمن ومحمي",
-    description: "معاملات مشفرة بضمان استرداد كامل",
-    color: "var(--success)",
-    gradient: "from-[var(--success)]/20 to-[var(--success)]/5",
-  },
-  {
-    icon: Star,
-    title: "بائعات موثوقات",
-    description: "نظام توثيق وتقييم شفاف",
-    color: "var(--warning)",
-    gradient: "from-[var(--warning)]/20 to-[var(--warning)]/5",
-  },
-  {
-    icon: Truck,
-    title: "توصيل سريع وآمن",
-    description: "لجميع مناطق المملكة مع تتبع",
-    color: "var(--info)",
-    gradient: "from-[var(--info)]/20 to-[var(--info)]/5",
-  },
-];
 
 // ✨ Featured categories with icons
 const FEATURED_CATEGORIES = [
@@ -663,16 +639,7 @@ function PremiumHero({
             ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
           `}
           >
-            {[
-              { icon: CheckCircle2, text: "+10,000 فستان" },
-              { icon: CheckCircle2, text: "شحن مجاني" },
-              { icon: CheckCircle2, text: "ضمان استرداد" },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <item.icon className="h-4.5 w-4.5 text-[var(--success)]" />
-                <span>{item.text}</span>
-              </div>
-            ))}
+
           </div>
         </div>
       </div>
@@ -746,64 +713,6 @@ function CategoryCard({
         </CardContent>
       </Card>
     </Link>
-  );
-}
-
-// ✨ Premium Trust Badge Card
-function TrustBadgeCard({
-  badge,
-  index,
-}: {
-  badge: (typeof TRUST_BADGES)[0];
-  index: number;
-}) {
-  return (
-    <Card
-      className="
-      border border-[var(--border)] bg-[var(--surface)]
-      hover:shadow-xl hover:shadow-[var(--primary)]/10 hover:border-[var(--primary)]/30
-      transition-all duration-300 text-center
-      group
-    "
-    >
-      <CardContent className="p-7">
-        {/* Icon with Gradient Background */}
-        <div
-          className={`
-          relative w-18 h-18 mx-auto rounded-2xl 
-          flex items-center justify-center mb-5
-          bg-gradient-to-br ${badge.gradient}
-          ring-2 ring-[var(--border)]
-          group-hover:scale-110 group-hover:ring-[var(--primary)]/30
-          transition-all duration-300
-        `}
-        >
-          <badge.icon className="h-8 w-8" style={{ color: badge.color }} />
-
-          {/* Animated ring */}
-          <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[var(--primary)]/30 transition-colors duration-300" />
-        </div>
-
-        {/* Title */}
-        <h3 className="text-lg font-bold text-[var(--text)] font-cairo mb-2 group-hover:text-[var(--primary)] transition-colors">
-          {badge.title}
-        </h3>
-
-        {/* Description */}
-        <p className="text-sm text-[var(--textSecondary)] font-cairo leading-relaxed">
-          {badge.description}
-        </p>
-
-        {/* Decorative line */}
-        <div
-          className="
-          h-px mx-auto mt-5 w-12 rounded-full bg-[var(--border)]
-          group-hover:bg-[var(--primary)] group-hover:w-16
-          transition-all duration-300
-        "
-        />
-      </CardContent>
-    </Card>
   );
 }
 
@@ -1034,19 +943,6 @@ export function HomeContent() {
                 نلتزم بتقديم أفضل تجربة تسوق آمنة وموثوقة، مع ضمانات تحمي حقوقكِ
                 في كل خطوة
               </p>
-            </div>
-
-            {/* Trust Badges Grid */}
-            <div className="grid md:grid-cols-3 gap-6">
-              {TRUST_BADGES.map((badge, index) => (
-                <div
-                  key={index}
-                  className="animate-fadeInUp"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <TrustBadgeCard badge={badge} index={index} />
-                </div>
-              ))}
             </div>
 
             {/* Additional Trust Indicators */}

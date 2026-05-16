@@ -19,13 +19,17 @@ export interface Order {
   delivery_address?: string | null;
   delivery_notes?: string | null;
   delivery_price?: number | null;
-  total_price: number;
+  product_price: number;
+  product_image: string;
+  product_title: string;
+  seller_username: string;
+  buyer_username: string;
   created_at: string;
   updated_at: string;
   product: {
     id: string;
     title: string;
-    images: { url: string }[];
+    primary_image: string;
     price: number;
     city: string;
   };

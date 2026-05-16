@@ -19,7 +19,6 @@ const FOOTER_LINKS = {
     { href: '/auctions', label: 'المزادات' },
     { href: '/products?condition=new', label: 'فساتين جديدة' },
     { href: '/products?condition=like_new', label: 'فساتين مستعملة' },
-
   ],
   account: [
     { href: '/auth/login', label: 'تسجيل الدخول' },
@@ -27,13 +26,13 @@ const FOOTER_LINKS = {
     { href: '/favorites', label: 'المفضلة' },
     { href: '/orders', label: 'طلباتي' },
   ],
+  // روابط البائع (تُصفى حسب الصلاحية)
   seller: [
     { href: '/seller/dashboard', label: 'لوحة البائعة' },
     { href: '/seller/products/new', label: 'إضافة منتج' },
+    { href: '/seller/auctions/new', label: 'إنشاء مزاد' },
     { href: '/seller/upgrade', label: 'ترقية الحساب' },
     { href: '/seller/store-settings', label: 'إعدادات المتجر' },
-    { href: '/auctions/create', label: 'إنشاء مزاد' },
-    { href: '/products/create', label: 'إضافة منتج' },
   ],
   support: [
     { href: '/static/about', label: 'من نحن' },
@@ -53,32 +52,33 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
   const { user, isAuthenticated } = useAuthStore();
 
-  // تحديد صلاحية عرض روابط البائع
-
   const isProfessionalSeller = user?.is_professional_seller || false;
   const isVerifiedSeller = user?.is_verified || false;
+
+  // هل نعرض أي روابط بائع؟
   const showSellerLinks = isAuthenticated && (isProfessionalSeller || isVerifiedSeller);
 
-
-
-  // إذا كان بائعًا موثقًا فقط (وليس تاجرًا محترفًا)، نعرض فقط رابط الترقية
-  // const showOnlyUpgrade = isAuthenticated && isVerifiedSeller && !isProfessionalSeller;
+  // عنوان القسم وروابطه حسب نوع المستخدم
+  let sellerSectionTitle = '';
   let sellerLinksToShow: typeof FOOTER_LINKS.seller = [];
 
-
-
-  // روابط البائع المعروضة بناءً على الصلاحية
   if (isProfessionalSeller) {
-
-    sellerLinksToShow = FOOTER_LINKS.seller.filter(link => link.href !== '/seller/upgrade');
-    sellerLinksToShow = FOOTER_LINKS.seller.filter(link => link.href !== '/auctions/create');
-    sellerLinksToShow = FOOTER_LINKS.seller.filter(link => link.href !== '/products/create');
+    // تاجر محترف
+    sellerSectionTitle = 'لوحة تحكم التاجر';
+    sellerLinksToShow = FOOTER_LINKS.seller.filter(
+      link => link.href !== '/seller/upgrade' // إخفاء الترقية
+    );
   } else if (isVerifiedSeller) {
-
-    sellerLinksToShow = FOOTER_LINKS.seller.filter(link => link.href !== '/auctions/create');
-    sellerLinksToShow = FOOTER_LINKS.seller.filter(link => link.href !== '/products/create');
-    sellerLinksToShow = FOOTER_LINKS.seller.filter(link => link.href === '/seller/upgrade');
+    // بائع موثّق فقط (غير محترف)
+    sellerSectionTitle = 'لوحة تحكم البائع';
+    sellerLinksToShow = FOOTER_LINKS.seller.filter(
+      link =>
+        link.href === '/seller/products/new' ||
+        link.href === '/seller/auctions/new' ||
+        link.href === '/seller/upgrade'
+    );
   }
+
   return (
     <footer className="bg-[var(--surface)] dark:bg-[var(--surface)] border-t border-[var(--border)] mt-auto">
       {/* Main Footer */}
@@ -153,7 +153,9 @@ export function Footer() {
           {/* Seller Links - تظهر فقط للبائعين الموثقين أو التجار */}
           {showSellerLinks && (
             <div>
-              <h4 className="font-bold text-[var(--primary)] mb-4 font-cairo">البائعات</h4>
+              <h4 className="font-bold text-[var(--primary)] mb-4 font-cairo">
+                {sellerSectionTitle}
+              </h4>
               <ul className="space-y-2">
                 {sellerLinksToShow.map((link) => (
                   <li key={link.href}>

@@ -2149,3 +2149,225 @@ input,
 button {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
+ @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+          animation: fadeInUp 0.4s ease-out forwards;
+          opacity: 0;
+        }
+
+        @keyframes float-icon {
+          0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.3; }
+          50% { transform: translateY(-25px) scale(1.1) rotate(10deg); opacity: 0.6; }
+        }
+        .animate-float-icon {
+          animation: float-icon 5s ease-in-out infinite;
+        }
+
+        @keyframes float-particle {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+          50% { transform: translateY(-20px) scale(1.3); opacity: 0.8; }
+        }
+        .animate-float-particle {
+          animation: float-particle 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-orb {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.08); }
+        }
+        .animate-pulse-orb {
+          animation: pulse-orb 6s ease-in-out infinite;
+        }
+        .animate-pulse-orb.delay-1000 { animation-delay: 1s; }
+
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.4; transform: scale(1); box-shadow: 0 0 0 0 var(--primary); }
+          50% { opacity: 0.6; transform: scale(1.05); box-shadow: 0 0 0 30px var(--primary)/0; }
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.7; transform: scale(1.15); }
+        }
+        .animate-pulse-ring {
+          animation: pulse-ring 2.5s ease-in-out infinite;
+        }
+
+        @keyframes ping-slow {
+          0%, 100% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.6); opacity: 0.3; }
+        }
+        .animate-ping-slow {
+          animation: ping-slow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes bell-sway {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(-8deg); }
+          75% { transform: rotate(8deg); }
+        }
+        .animate-bell-sway {
+          animation: bell-sway 3s ease-in-out infinite;
+        }
+
+        @keyframes rotate-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-rotate-slow {
+          animation: rotate-slow 25s linear infinite;
+        }
+
+        @keyframes bounce-in {
+          0% { transform: scale(0); opacity: 0; }
+          50% { transform: scale(1.2); }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-bounce-in {
+          animation: bounce-in 0.4s ease-out forwards;
+        }
+
+        /* Custom Scrollbar */
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 6px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: var(--border);
+          border-radius: 10px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: var(--primary);
+        }@keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+          animation: fadeInUp 0.35s ease-out forwards;
+          opacity: 0;
+        }
+
+        @keyframes float-icon {
+          0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.3; }
+          50% { transform: translateY(-20px) scale(1.1) rotate(8deg); opacity: 0.6; }
+        }
+        .animate-float-icon {
+          animation: float-icon 5s ease-in-out infinite;
+        }
+
+        @keyframes float-particle {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+          50% { transform: translateY(-15px) scale(1.2); opacity: 0.7; }
+        }
+        .animate-float-particle {
+          animation: float-particle 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-orb {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.06); }
+        }
+        .animate-pulse-orb {
+          animation: pulse-orb 6s ease-in-out infinite;
+        }
+        .animate-pulse-orb.delay-1000 { animation-delay: 1s; }
+
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.4; transform: scale(1); box-shadow: 0 0 0 0 var(--primary); }
+          50% { opacity: 0.6; transform: scale(1.04); box-shadow: 0 0 0 25px var(--primary)/0; }
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.65; transform: scale(1.12); }
+        }
+        .animate-pulse-ring {
+          animation: pulse-ring 2.5s ease-in-out infinite;
+        }
+
+        @keyframes chat-sway {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(-5deg); }
+          75% { transform: rotate(5deg); }
+        }
+        .animate-chat-sway {
+          animation: chat-sway 3s ease-in-out infinite;
+        }
+
+        @keyframes rotate-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-rotate-slow {
+          animation: rotate-slow 25s linear infinite;
+        }
+
+        @keyframes bounce-in {
+          0% { transform: scale(0); opacity: 0; }
+          50% { transform: scale(1.2); }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-bounce-in {
+          animation: bounce-in 0.4s ease-out forwards;
+        }
+
+        /* Custom Scrollbar - Smaller */
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 5px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: var(--border);
+          border-radius: 10px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: var(--primary);
+        }
+        /* src/styles/globals.css */
+
+/* ✨ Shimmer Animation - 3 Times Only & Contained */
+@keyframes shimmer-finite {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer-finite {
+  /* 
+    1. التدرج اللوني للخلفية (شفاف -> لون رئيسي -> شفاف)
+    2. الحركة تستغرق 2.5 ثانية وتكرر 3 مرات فقط ثم تتوقف
+    3. يبدأ من مكان متقدم قليلاً حتى لا يظهر كـ "قفزة"
+  */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-finite 2.5s ease-in-out 3; /* 3 iterations */
+  
+  /* للتأكد من أن الأنيميشن يبدأ فوراً ولا يتوقف فجأة */
+  animation-fill-mode: forwards;
+}
+
+/* ✨ Re-trigger helper (optional) */
+.animate-shimmer-restart {
+  animation: none;
+}

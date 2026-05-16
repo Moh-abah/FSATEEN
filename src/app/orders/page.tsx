@@ -35,7 +35,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Navbar, Footer, MobileBottomNav } from "@/components/layout";
 import { LoadingSkeleton, EmptyState, ErrorState } from "@/components/shared";
 import { useOrders } from "@/hooks";
-import { OrderStatus } from "@/types";
+import { Order, OrderStatus } from "@/types"; 
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 // ✨ Configuration Constants
@@ -74,7 +74,7 @@ function GridOrderCard({
   order,
   role,
 }: {
-  order: any;
+    order: Order;
   role: "buyer" | "seller";
 }) {
   const isBuyer = role === "buyer";
@@ -141,7 +141,7 @@ function GridOrderCard({
         <div className="relative aspect-square overflow-hidden bg-[var(--surfaceMuted)]">
           {/* Main Image with Zoom Effect */}
           <img
-            src={order.product?.images?.[0]?.url || "/placeholder-dress.png"}
+            src={order.product?.primary_image}
             alt={order.product?.title || "منتج"}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
             loading="lazy"
@@ -188,19 +188,11 @@ function GridOrderCard({
               shadow-lg border border-white/30 min-w-[80px] text-center
             "
             >
-              {formatCurrency(order.total_price)}
+              {formatCurrency(order.product.price)}
             </span>
           </div>
 
-          {/* Image Count Indicator */}
-          {order.product?.images?.length > 1 && (
-            <div className="absolute top-3 right-3 z-10">
-              <span className="px-2 py-1 rounded-lg bg-black/40 backdrop-blur-sm text-white text-xs font-medium font-cairo flex items-center gap-1">
-                <Grid3X3 className="w-3 h-3" />
-                {order.product.images.length}
-              </span>
-            </div>
-          )}
+
         </div>
 
         {/* ✨ Order Info Section - Clean & Organized */}
@@ -231,11 +223,7 @@ function GridOrderCard({
                 {formatDate(order.created_at, { dateStyle: "short" })}
               </span>
             </div>
-            {order.quantity > 1 && (
-              <Badge className="text-xs font-cairo bg-[var(--primary)]/10 text-[var(--primary)] border-0 hover:bg-[var(--primary)]/20">
-                ×{order.quantity}
-              </Badge>
-            )}
+
           </div>
         </CardContent>
 
@@ -254,7 +242,7 @@ function ListOrderCard({
   order,
   role,
 }: {
-  order: any;
+    order: Order;
   role: "buyer" | "seller";
 }) {
   const isBuyer = role === "buyer";
@@ -316,7 +304,7 @@ function ListOrderCard({
             <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-[var(--surfaceMuted)] shrink-0 ring-1 ring-[var(--border)] group-hover:ring-[var(--primary)]/30 transition-all">
               <img
                 src={
-                  order.product?.images?.[0]?.url || "/placeholder-dress.png"
+                  order.product?.primary_image
                 }
                 alt={order.product?.title || "منتج"}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
@@ -351,11 +339,7 @@ function ListOrderCard({
                     {otherParty?.full_name || "مستخدم"}
                   </span>
                 </span>
-                {order.quantity > 1 && (
-                  <span className="text-[var(--textTertiary)] font-cairo">
-                    ×{order.quantity}
-                  </span>
-                )}
+
               </div>
 
               <div className="flex items-center justify-between">
@@ -364,7 +348,7 @@ function ListOrderCard({
                   <span>{formatDate(order.created_at, { dateStyle: "short" })}</span>
                 </div>
                 <span className="font-bold text-lg text-[var(--primary)] font-cairo">
-                  {formatCurrency(order.total_price)}
+                  {formatCurrency(order.product_price)}
                 </span>
               </div>
             </div>
@@ -511,9 +495,9 @@ export default function OrdersPage() {
             new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
           );
         case "highest":
-          return (b.total_price || 0) - (a.total_price || 0);
+          return (b.product_price || 0) - (a.product_price || 0);
         case "lowest":
-          return (a.total_price || 0) - (b.total_price || 0);
+          return (a.product_price || 0) - (b.product_price || 0);
         default:
           return (
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()

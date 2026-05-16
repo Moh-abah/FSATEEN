@@ -3664,19 +3664,19 @@ def trade_executor_thread():
             cmd = task.get('cmd')
             sym = task.get('sym')
             session_ref = task.get('session_ref')
-            
+
             if not session_ref:
                 print(f"⚠️ Task without session_ref: {task}", flush=True)
                 continue
-                
+
             user_id = getattr(session_ref, 'user_id', 'UNKNOWN')
-            
+
             # ==================== COMMON CHECKS ====================
             if cmd not in ['BUY', 'SELL']:
                 continue
             if not sym:
                 continue
-                
+
             # ==================== BUY LOGIC ====================
             if cmd == 'BUY':
                 try:
@@ -3695,11 +3695,11 @@ def trade_executor_thread():
                         add_log(f"❌ {user_id}: Insufficient balance for {sym}")
                         session_ref.PENDING_BUYS.discard(sym)
                         continue
-                    
+
                     # --- التنفيذ الحقيقي ---
                     if LIVE and not session_ref.dry_run and session_ref.client:
                         ensure_symbol_filters([sym])
-                        
+
                         try:
                             order = session_ref.client.create_order(
                                 symbol=sym,
@@ -3707,7 +3707,7 @@ def trade_executor_thread():
                                 type="MARKET",
                                 quoteOrderQty=str(order_size)
                             )
-                            
+
                             # حساب السعر المرجح الصحيح (كما في النسخة القديمة)
                             fills = order.get("fills", [])
                             if fills:
@@ -3718,9 +3718,9 @@ def trade_executor_thread():
                                     fill_price = float(fill["price"])
                                     total_qty_fill += fill_qty
                                     total_cost += fill_qty * fill_price
-                                
+
                                 actual_entry_price = total_cost / total_qty_fill if total_qty_fill > 0 else float(fills[0]["price"])
-                                bought_qty = total_qty_fill        
+                                bought_qty = total_qty_fill
 
 
                                 # تحديث TR فوراً بالسعر الحقيقي للتنفيذ
@@ -3728,24 +3728,24 @@ def trade_executor_thread():
                                     TR.setdefault(sym, []).append(actual_entry_price)
                                     # حافظ على حجم التاريخ (400 تيك)
                                     if len(TR[sym]) > 400:
-                                        TR[sym] = TR[sym][-400:]                                                        
+                                        TR[sym] = TR[sym][-400:]
 
                                 # تحديث الرصيد
                                 session_ref.BALANCE -= order_size
-                                
+
                                 # --- عملية الدمج أو إنشاء صفقة جديدة (Core Logic) ---
                                 with EXECUTOR_LOCK:
                                     if sym in session_ref.OPEN:
                                         # 1. دمج مع صفقة موجودة (DCA)
                                         old_trade = session_ref.OPEN[sym]
-                                        
+
                                         # حساب المتوسط الجديد
                                         old_qty = old_trade['total_qty']
                                         old_avg = old_trade['avg_entry']
-                                        
+
                                         new_total_qty = old_qty + bought_qty
                                         new_avg_entry = (old_avg * old_qty + actual_entry_price * bought_qty) / new_total_qty
-                                        
+
                                         # تحديث بيانات الصفقة
                                         old_trade['total_qty'] = new_total_qty
                                         old_trade['avg_entry'] = new_avg_entry
@@ -3754,32 +3754,13 @@ def trade_executor_thread():
                                         old_trade['enhancement_drop_closed'] = False
                                         old_trade['last_enhancement_price'] = None
 
-
-
-
-
-                                        entries = old_trade['entries_count']
-                                        if entries == 2:
-                                            old_trade['target_pct'] = 0.0040
-                                        elif entries == 3:
-                                            old_trade['target_pct'] = 0.0035
-                                        elif entries >= 4:
-                                            old_trade['target_pct'] = 0.0030
-                                        else:
-                                            old_trade['target_pct'] = 0.0050
-
-
-
-
-
-                                        
                                         # إعادة حساب جميع الأهداف بناءً على المتوسط الجديد
                                         for i, pct in enumerate(TP_PCTS, start=1):
                                             old_trade[f"tp{i}"] = new_avg_entry * (1 + pct)
                                         old_trade["sl"] = new_avg_entry * (1 - SL_PCT)
-                                        
+
                                         add_log(f"🔄 {user_id} {sym}: DCA Added - New Qty: {new_total_qty:.4f}, New Avg: {new_avg_entry:.6f}")
-                                        
+
                                     else:
                                         # 2. صفقة جديدة
                                         tps = {f"tp{i}": actual_entry_price * (1 + pct) for i, pct in enumerate(TP_PCTS, start=1)}
@@ -3801,18 +3782,6 @@ def trade_executor_thread():
 
                                             "prev": actual_entry_price,
                                             "tp_touched": False,
-
-
-
-
-                                            "target_pct": 0.0050,
-
-
-
-
-
-
-
                                             "tp_level": None,
                                             "highest_tp_reached": 0,
                                             "close_pending": None,
@@ -3829,32 +3798,32 @@ def trade_executor_thread():
 
                         except BinanceAPIException as e:
                             add_log(f"❌ {user_id}: Binance API Error buying {sym}: {e}")
-                    
+
                     # --- المحاكاة ---
                     elif session_ref.dry_run or not LIVE:
                         qty = order_size / price if price > 0 else 0
-                        
+
                         with EXECUTOR_LOCK:
                             if sym in session_ref.OPEN:
                                 # محاكاة الدمج
                                 old_trade = session_ref.OPEN[sym]
                                 old_qty = old_trade['total_qty']
                                 old_avg = old_trade['avg_entry']
-                                
+
                                 new_total_qty = old_qty + qty
                                 new_avg_entry = (old_avg * old_qty + price * qty) / new_total_qty
-                                
+
                                 old_trade['total_qty'] = new_total_qty
                                 old_trade['avg_entry'] = new_avg_entry
                                 old_trade['entries_count'] = old_trade.get('entries_count', 1) + 1
                                 old_trade['last_entry_time'] = time.time()
-                                
+
                                 for i, pct in enumerate(TP_PCTS, start=1):
                                     old_trade[f"tp{i}"] = new_avg_entry * (1 + pct)
                                 old_trade["sl"] = new_avg_entry * (1 - SL_PCT)
-                                
+
                                 add_log(f"🔄 [SIM] {user_id} {sym}: DCA Added - New Qty: {new_total_qty:.4f}, New Avg: {new_avg_entry:.6f}")
-                                
+
                             else:
                                 tps = {f"tp{i}": price * (1 + pct) for i, pct in enumerate(TP_PCTS, start=1)}
                                 new_trade = {
@@ -3877,22 +3846,22 @@ def trade_executor_thread():
                                 }
                                 session_ref.OPEN[sym] = new_trade
                                 add_log(f"✅ [SIM] {user_id}: Bought {sym} @ {price:.6f}, Qty: {qty:.6f}")
-                        
+
                 except Exception as e:
                     logging.error(f"[BUY ERROR] User {user_id}, {sym}: {e}")
                     add_log(f"❌ {user_id}: Buy error for {sym}: {str(e)[:50]}")
-                
+
                 finally:
                     session_ref.PENDING_BUYS.discard(sym)
-            
-            
+
+
             # ==================== SELL LOGIC (FIXED) ====================
             elif cmd == 'SELL':
                 try:
                     level = task.get('level')
                     is_sl = task.get('is_sl', False)
                     is_esl = task.get('is_esl', False)
-                    
+
                     with EXECUTOR_LOCK:
                         if sym not in session_ref.OPEN:
                             add_log(f"⚠️ {user_id}: No open trade for {sym}")
@@ -3902,32 +3871,32 @@ def trade_executor_thread():
                         entry = t.get('avg_entry', 0)
                         qty = t.get('total_qty', 0)
                         t_snapshot = t.copy()
-                    
+
                     # --- التنفيذ الحقيقي ---
                     if LIVE and not session_ref.dry_run and session_ref.client:
                         ensure_symbol_filters([sym])
                         f = SYMBOL_FILTERS.get(sym, {})
-                        
+
                         if f:
 
 
 
-                            base_asset = sym.replace("USDT", "") 
-                            
-                    
+                            base_asset = sym.replace("USDT", "")
+
+
                             balance_info = session_ref.client.get_asset_balance(asset=base_asset)
                             real_free = float(balance_info.get('free', 0.0))
-    
+
 
 
                             if real_free <= 0:
                                 raise Exception("small posision i dont sell   ")
-                                
+
                             step_size = f.get('step_size', 0.00000001)
                             min_qty = f.get('min_qty', 0)
-                            
-                        
-                            
+
+
+
 
                             target_qty = real_free if real_free < qty else qty
                             qty_adj = _floor_to_step(target_qty * 0.999, step_size)
@@ -3939,24 +3908,12 @@ def trade_executor_thread():
                             if last_price is None:
                                 last_price = TR.get(sym, [entry])[-1]
 
-
-
-
-                            tp1_price = entry * (1 + TP_PCTS[0]) 
+                            # منع البيع إذا لم نصل لأول هدف ولم يكن وقف خسارة
+                            tp1_price = entry * (1 + TP_PCTS[0])
                             if last_price < tp1_price and not is_sl and not is_esl:
                                 add_log(f"⚠️ {user_id} {sym} Price {last_price:.6f} < TP1 {tp1_price:.6f}. Sell delayed.")
                                 session_ref.PENDING_SELLS.discard(sym)
                                 continue
-                            # =======================================================
-
-
-                            tp1_price = entry * (1 + TP_PCTS[0]) 
-                            # إغلاق إجباري لأمر TP1 (level == 1) حتى لو السعر أقل قليلاً
-                            if last_price < tp1_price and not is_sl and not is_esl and level != 1:
-                                add_log(f"⚠️ {user_id} {sym} Price {last_price:.6f} < TP1 {tp1_price:.6f}. Sell delayed.")
-                                session_ref.PENDING_SELLS.discard(sym)
-                                continue
-
                             # =======================================================
 
 
@@ -3971,26 +3928,18 @@ def trade_executor_thread():
                                     if last_price is None:
                                         # الرجوع إلى آخر سعر متاح في TR أو متوسط الدخول
                                         last_price = TR.get(sym, [entry])[-1]
-                                    
+
                                     tp1_price = entry * (1 + TP_PCTS[0])  # TP1 كنسبة مئوية
                                     # if last_price < tp1_price and not is_sl and not is_esl:
                                     #     add_log(f"⚠️ {user_id} {sym} price {last_price:.6f} small  undeer TP1 {tp1_price:.6f}. tageeel  seeel.")
                                     #     session_ref.PENDING_SELLS.discard(sym)
-                                    #     continue   
+                                    #     continue
 
                                     # التعديل هنا: أضفنا شرط استثناء لهروب السيولة لكي يمر الأمر فوراً
                                     if last_price < tp1_price and not is_sl and not is_esl and level != 'EMERGENCY_VOL_DROP':
                                         add_log(f"⚠️ {user_id} {sym} Price {last_price:.6f} < TP1 {tp1_price:.6f}. Sell delayed.")
                                         session_ref.PENDING_SELLS.discard(sym)
                                         continue
-
-                                    # إغلاق إجباري لأمر TP1 (level == 1) حتى لو السعر أقل قليلاً
-                                    if last_price < tp1_price and not is_sl and not is_esl and level != 1 and level != 'EMERGENCY_VOL_DROP':
-                                        add_log(f"⚠️ {user_id} {sym} Price {last_price:.6f} < TP1 {tp1_price:.6f}. Sell delayed.")
-                                        session_ref.PENDING_SELLS.discard(sym)
-                                        continue
-
-
                                     # =======================================================
 
                                     order = session_ref.client.create_order(
@@ -3999,36 +3948,35 @@ def trade_executor_thread():
                                         type="MARKET",
                                         quantity=format(qty_adj, '.8f').rstrip('0').rstrip('.')
                                     )
-                                    
+
                                     # حساب الربح
                                     fills = order.get("fills", [])
-                                    received = sum(float(f.get("price", 0)) * float(f.get("qty", 0)) 
+                                    received = sum(float(f.get("price", 0)) * float(f.get("qty", 0))
                                                   for f in fills)
-                                    
+
                                     if received > 0:
                                         # حساب الربح بناء على الكمية التي تم بيعها فعلياً والسعر المسجل
                                         # (يمكن استخدام received - (qty_adj * entry) إذا أردت الدقة بناء على التنفيذ)
-                                        pnl = received - (qty_adj * entry) 
+                                        pnl = received - (qty_adj * entry)
                                         session_ref.BALANCE += received
-                                        
+
                                         kind = "ESL" if is_esl else ("SL" if is_sl else f"TP{level}")
-                                        trade_value = entry * qty
-                                        session_ref.finalize_close(sym, pnl, kind, level, is_sl, is_esl, trade_value=trade_value)
-                                        
+                                        session_ref.finalize_close(sym, pnl, kind, level, is_sl, is_esl)
+
                                         add_log(f"✅ {user_id}: Sold {sym} @ {received/qty_adj:.6f}, PnL: {pnl:.4f}")
                                     else:
                                         add_log(f"⚠️ {user_id}: Sell order filled with zero value")
-                                        
+
                                 except BinanceAPIException as e:
                                     add_log(f"❌ {user_id}: Binance API Error selling {sym}: {e}")
                                     raise
-                    
+
                     # --- المحاكاة ---
                     else:
                         current_price = TR.get(sym, [entry])[-1] if TR.get(sym) else entry
-                        
+
                         # تطبيق شرط الأمان في المحاكاة أيضاً
-                        tp1_price = entry * (1 + target_pct)
+                        tp1_price = entry * (1 + TP_PCTS[0])
                         if current_price < tp1_price and not is_sl and not is_esl:
                             add_log(f"⚠️ [SIM] {user_id} {sym} Price below TP1, delaying sell.")
                             session_ref.PENDING_SELLS.discard(sym)
@@ -4036,28 +3984,31 @@ def trade_executor_thread():
 
                         pnl = (current_price - entry) * qty
                         session_ref.BALANCE += (current_price * qty)
-                        
+
                         kind = "ESL" if is_esl else ("SL" if is_sl else f"TP{level}")
                         session_ref.finalize_close(sym, pnl, kind, level, is_sl, is_esl)
-                        
+
                         add_log(f"🔶 [SIM] {user_id}: Sold {sym} @ {current_price:.6f}, PnL: {pnl:.4f}")
-                    
+
                 except Exception as e:
-                    logging.error(f"[SELL ERROR] User {user_id}, {sym}: {e}")
+                    logging.error(f"[SELL ERROR] User {user_id},{sym}: {e}")
                     add_log(f"❌ {user_id}: Sell error for {sym}: {str(e)[:50]}")
-                    
+
                     with EXECUTOR_LOCK:
                         if sym in session_ref.OPEN:
                             session_ref.OPEN[sym]['closing'] = False
-                
+
                 finally:
                     session_ref.PENDING_SELLS.discard(sym)
-        
+
         except Exception as e:
             logging.error(f"Executor Loop Error: {e}")
             time.sleep(1)
 
-# ==================== HELPER FUNCTION ====================
+
+
+
+
 
 def _force_sell_small_qty(session_ref, sym, entry_price):
     """بيع إجباري للكميات الصغيرة (Dust)"""

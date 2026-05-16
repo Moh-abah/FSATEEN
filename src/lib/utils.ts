@@ -230,8 +230,15 @@ export function formatNumber(num: number): string {
 }
 
 // Format date in Arabic
+
+
 export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOptions): string {
   const d = typeof date === 'string' ? new Date(date) : date;
+  // إذا كان options يحتوي على dateStyle أو timeStyle، استخدمه دون إضافة خيارات افتراضية
+  if (options && ('dateStyle' in options || 'timeStyle' in options)) {
+    return new Intl.DateTimeFormat('ar-SA', options).format(d);
+  }
+
   return new Intl.DateTimeFormat('ar-SA', {
     year: 'numeric',
     month: 'long',

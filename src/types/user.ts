@@ -13,9 +13,11 @@ export interface User {
   is_verified: boolean;
   is_professional_seller: boolean;
   account_type: 'user' | 'seller' | 'moderator' | 'admin';
-  rating: number;
-  total_ratings: number;
+  rating_avg: number;
+  rating_count: number;
   created_at: string;
+  products_count: number;
+  sales_count: number;
   updated_at: string;
 }
 
@@ -96,8 +98,10 @@ export interface PublicUserProfile {
   full_name?: string | null;
   avatar_url?: string | null;
   city?: string | null;
-  rating: number;
-  total_ratings: number;
+  bio?: string | null;
+  account_type?: string | null;
+  rating_avg: number;
+  rating_count: number;
   is_verified: boolean;
   is_professional_seller: boolean;
   products_count?: number;
