@@ -37,6 +37,9 @@ import { LoadingSkeleton, EmptyState, ErrorState } from "@/components/shared";
 import { useOrders } from "@/hooks";
 import { Order, OrderStatus } from "@/types"; 
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { RatingDialog } from '@/components/Rating/rating-dialog';
+import { useOrderActions } from '@/hooks';
+
 
 // ✨ Configuration Constants
 const STATUS_FILTERS = [
@@ -73,12 +76,16 @@ const SORT_OPTIONS = [
 function GridOrderCard({
   order,
   role,
+  onRate,
 }: {
     order: Order;
   role: "buyer" | "seller";
+
+  onRate?: (id: string) => void
+
 }) {
   const isBuyer = role === "buyer";
-  const otherParty = isBuyer ? order.seller : order.buyer;
+  const otherParty = isBuyer ? order.buyer : order.buyer;
 
   const statusConfig: Record<
     string,
@@ -164,6 +171,20 @@ function GridOrderCard({
               />
               {currentStatus.label}
             </span>
+            {order.status === 'completed' && onRate && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onRate(order.id);
+                }}
+                className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full text-xs font-semibold font-cairo bg-[var(--primary)] text-white shadow-md hover:bg-[var(--primaryDark)] transition-colors backdrop-blur-sm border border-white/20"
+              >
+                <Star className="w-3 h-3" />
+                تقييم
+              </button>
+            )}
+
           </div>
 
           {/* Quick Actions - Reveal on Hover */}
@@ -179,6 +200,9 @@ function GridOrderCard({
               عرض التفاصيل
             </Button>
           </div>
+
+
+          
 
           {/* Price Badge - Elegant Floating Tag */}
           <div className="absolute bottom-3 right-3 z-10">
@@ -202,7 +226,7 @@ function GridOrderCard({
             className="font-semibold text-[var(--text)] font-cairo line-clamp-2 mb-2 
             group-hover:text-[var(--primary)] transition-colors duration-200 leading-tight"
           >
-            {order.product?.title}
+            {order.product_title}
           </h3>
 
           {/* Other Party - Subtle Info */}
@@ -211,7 +235,7 @@ function GridOrderCard({
               {isBuyer ? "البائعة:" : "المشترية:"}
             </span>
             <span className="text-xs font-medium text-[var(--text)] font-cairo truncate max-w-[120px]">
-              {otherParty?.full_name || "مستخدم"}
+              {otherParty?.username || "مستخدم"}
             </span>
           </div>
 
@@ -241,12 +265,14 @@ function GridOrderCard({
 function ListOrderCard({
   order,
   role,
+  onRate,
 }: {
     order: Order;
   role: "buyer" | "seller";
+    onRate?: (id: string) => void
 }) {
   const isBuyer = role === "buyer";
-  const otherParty = isBuyer ? order.seller : order.buyer;
+  const otherParty = isBuyer ? order.buyer : order.buyer;
 
   const statusConfig: Record<
     string,
@@ -330,13 +356,27 @@ function ListOrderCard({
                 >
                   {currentStatus.label}
                 </span>
+                {order.status === 'completed' && onRate && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onRate(order.id);
+                    }}
+                    className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold font-cairo bg-[var(--primary)] text-white shadow hover:bg-[var(--primaryDark)] transition-colors"
+                  >
+                    <Star className="w-3 h-3" />
+                    تقييم
+                  </button>
+                )}
+
               </div>
 
               <div className="flex items-center gap-4 text-sm">
                 <span className="text-[var(--textTertiary)] font-cairo">
                   {isBuyer ? "من:" : "إلى:"}{" "}
                   <span className="text-[var(--text)] font-medium">
-                    {otherParty?.full_name || "مستخدم"}
+                    {otherParty?.username || "مستخدم"}
                   </span>
                 </span>
 
@@ -348,7 +388,7 @@ function ListOrderCard({
                   <span>{formatDate(order.created_at, { dateStyle: "short" })}</span>
                 </div>
                 <span className="font-bold text-lg text-[var(--primary)] font-cairo">
-                  {formatCurrency(order.product_price)}
+                  {formatCurrency(order.product.price)}
                 </span>
               </div>
             </div>
@@ -468,6 +508,10 @@ export default function OrdersPage() {
 
   const { data, isLoading, error, refetch } = useOrders({ role, status });
 
+
+  const [ratingOrderId, setRatingOrderId] = useState<string | null>(null);
+
+
   const handleStatusChange = (value: string) => {
     setStatus(value === "all" ? undefined : (value as OrderStatus));
   };
@@ -527,6 +571,11 @@ export default function OrdersPage() {
 
 
   const hasMore = data ? data.page * data.page_size < data.total : false;
+
+  const handleRate = (orderId: string) => {
+    setRatingOrderId(orderId);
+  };
+
 
 
   return (
@@ -789,9 +838,9 @@ export default function OrdersPage() {
             ) : filteredOrders && filteredOrders.length > 0 ? (
               filteredOrders.map((order) =>
                 viewMode === "grid" ? (
-                  <GridOrderCard key={order.id} order={order} role={role} />
+                  <GridOrderCard key={order.id} order={order} role={role} onRate={handleRate} />
                 ) : (
-                  <ListOrderCard key={order.id} order={order} role={role} />
+                    <ListOrderCard key={order.id} order={order} role={role} onRate={handleRate} />
                 )
               )
             ) : (
@@ -815,11 +864,24 @@ export default function OrdersPage() {
               </Button>
             </div>
           )}
+
+
+
         </div>
       </main>
 
       <Footer />
       <MobileBottomNav />
+
+
+      {ratingOrderId && (
+        <RatingDialog
+          isOpen={true}
+          onClose={() => setRatingOrderId(null)}
+          orderId={ratingOrderId}
+        />
+      )}
+
     </div>
   );
 }
