@@ -90,8 +90,8 @@ export default function SellerOrdersPage() {
                     <div className="flex gap-4">
                       <div className="w-20 h-20 rounded-lg overflow-hidden bg-[var(--surfaceMuted)] flex-shrink-0">
                         <img
-                          src={order.product?.images?.[0]?.url || '/placeholder-dress.png'}
-                          alt={order.product?.title || 'طلب'}
+                          src={order.product_image|| '/placeholder-dress.png'}
+                          alt={order.product_title || 'طلب'}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -111,7 +111,7 @@ export default function SellerOrdersPage() {
                         </div>
                         <div className="flex items-center justify-between mt-2">
                           <span className="text-[var(--primary)] font-bold">
-                            {order.total_price?.toLocaleString()} ريال
+                            {order.product_price?.toLocaleString()} ريال
                           </span>
                           <span className="text-xs text-[var(--textTertiary)]">
                             {new Date(order.created_at).toLocaleDateString('ar-SA')}

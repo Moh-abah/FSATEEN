@@ -106,8 +106,8 @@ export default function UserProfilePage() {
            </span>
           )}
           <span className="flex items-center gap-1">
-           <RatingStars rating={user.rating || 0} size="sm" />
-           <span>({user.total_ratings || 0})</span>
+           <RatingStars rating={user.rating_avg || 0} size="sm" />
+           <span>({user.rating_count || 0})</span>
           </span>
           {user.products_count !== undefined && (
            <span className="flex items-center gap-1">

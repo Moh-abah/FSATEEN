@@ -16,7 +16,7 @@ interface OrderCardProps {
 }
 
 export function OrderCard({ order, role }: OrderCardProps) {
-  const primaryImage = order.product?.images?.[0]?.url || '/placeholder-dress.png';
+  const primaryImage = order.product_image|| '/placeholder-dress.png';
 
   return (
     <Link href={`/orders/${order.id}`}>
@@ -56,7 +56,7 @@ export function OrderCard({ order, role }: OrderCardProps) {
 
               {/* Price */}
               <p className="text-lg font-bold text-[var(--primary)] font-cairo mt-1">
-                {formatCurrency(order.total_price)}
+                {formatCurrency(order.product_price)}
               </p>
 
               {/* Order Details */}

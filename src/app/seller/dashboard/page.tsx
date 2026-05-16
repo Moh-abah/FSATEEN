@@ -184,14 +184,14 @@ export default function SellerDashboardPage() {
                       <div key={order.id} className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-lg overflow-hidden bg-[var(--surfaceMuted)]">
                           <img
-                            src={order.product?.images?.[0]?.url || '/placeholder-dress.png'}
-                            alt={order.product?.title || 'طلب'}
+                            src={order.product?.primary_image || '/placeholder-dress.png'}
+                            alt={order.product_title || 'طلب'}
                             className="w-full h-full object-cover"
                           />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-[var(--text)] truncate">{order.product?.title}</p>
-                          <p className="text-[var(--primary)] text-sm">{formatCurrency(order.total_price)}</p>
+                          <p className="text-sm font-medium text-[var(--text)] truncate">{order.product_title}</p>
+                          <p className="text-[var(--primary)] text-sm">{formatCurrency(order.product_price)}</p>
                         </div>
                         <Badge className="bg-[var(--info)] text-[var(--textInverse)]">
                           {order.status === 'requested' ? 'جديد' : order.status}
